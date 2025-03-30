@@ -345,13 +345,13 @@ namespace WpfApp1.ViewModels
                         MessageBox.Show("Nie znaleziono kolumny z symbolem  w wierszu " + (i + 2));
                         return;
                     }
-                    var value = symbolRow.SelectedHeader;
+                    var value = row[symbolRow.SelectedHeader].Trim();
 
                     string query = "SELECT tw_Id FROM tw__Towar WHERE tw_Symbol = '" + row[symbolRow.SelectedHeader] + "'";
                     DB.QueryReturn response = DB.ExecuteSqlQuery(query);
                     if (!response.Success)
                     {
-                        MessageBox.Show("Towar o symbolu " + row[symbolRow.SelectedHeader] + " nie istnieje w bazie danych");
+                        MessageBox.Show("Towar o symbolu " + value + " nie istnieje w bazie danych");
                         return;
                     }
                     else
@@ -376,9 +376,9 @@ namespace WpfApp1.ViewModels
                         MessageBox.Show("Nie znaleziono kolumny z ean  w wierszu " + (i + 2));
                         return;
                     }
-                    var value = eanRow.SelectedHeader;
+                    var value = row[eanRow.SelectedHeader].Trim();
 
-                    string query = "SELECT tw_Id FROM tw__Towar WHERE tw_PodstKodKresk = '" + row[eanRow.SelectedHeader] + "'";
+                    string query = "SELECT tw_Id FROM tw__Towar WHERE tw_PodstKodKresk = '" + value + "'";
                     DB.QueryReturn response = DB.ExecuteSqlQuery(query);
                     if (response.Success)
                     {
@@ -393,7 +393,7 @@ namespace WpfApp1.ViewModels
                     }
                     else
                     {
-                        string query2 = "SELECT kk_IdTowar FROM tw_KodKreskowy WHERE kk_Kod = '" + row[eanRow.SelectedHeader] + "'";
+                        string query2 = "SELECT kk_IdTowar FROM tw_KodKreskowy WHERE kk_Kod = '" + value + "'";
                         DB.QueryReturn response2 = DB.ExecuteSqlQuery(query2);
 
                         if (response2.Success)
@@ -409,7 +409,7 @@ namespace WpfApp1.ViewModels
                         }
                         else
                         {
-                            MessageBox.Show("Towar o ean " + row[eanRow.SelectedHeader] + " nie istnieje w bazie danych");
+                            MessageBox.Show("Towar o ean " + value + " nie istnieje w bazie danych");
                             return;
                         }
                     }
@@ -435,7 +435,7 @@ namespace WpfApp1.ViewModels
 
 
                 // Sprawdzenie formatu stringa reprezentującego cenę
-                string priceString = row[priceRow.SelectedHeader];
+                string priceString = row[priceRow.SelectedHeader].Trim();
 
                 // Zamiana przecinka na kropkę, jeśli jest używany jako separator dziesiętny
                 if (priceString.Contains('.'))
